@@ -7,16 +7,22 @@ public class Remapper
 
     public List<MidiNote> GetDistinctNotes(MidiFile midiFile)
     {
-        var distinctNotes = midiFile.Events[TrackNumber]
+        var noteEvents = midiFile.Events[TrackNumber]
             .Where(a => a is NoteEvent)
             .Cast<NoteEvent>()
+            .ToList();
+
+        var distinctNotes = noteEvents
             .Select(a => a.NoteNumber)
             .Distinct()
             .OrderBy(a => a)
+            .ToList();
+
+        var mapped = distinctNotes
             .Select(a => MidiNote.FindByNumber(a))
             .ToList();
 
-        return distinctNotes;
+        return mapped;
     }
 
     public void AlterMapping(MidiFile midiFile, List<Mapping> mappings)
@@ -25,7 +31,19 @@ public class Remapper
         {
             if(evnt is NoteEvent noteEvent)
             {
-                var mapping = mappings.First(a => a.SourceNote.NoteNumber == noteEvent.NoteNumber);
+                var mapping = mappings.FirstOrDefault(a => a.SourceNote.NoteNumber == noteEvent.NoteNumber);
+                if (mapping is null)
+                {
+                    //TODO handle mapping not found
+                    continue;
+                }
+
+                if(mapping.TargetNote is null)
+                {
+                    //TODO handle TargetNote not set
+                    continue;
+                }
+
                 noteEvent.NoteNumber = mapping.TargetNote.NoteNumber;
             }
         }

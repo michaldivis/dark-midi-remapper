@@ -49,6 +49,6 @@ public class MidiNote
 
     public override string ToString()
     {
-        return NoteName;
+        return $"{NoteName} ({NoteNumber})";
     }
 }

@@ -10,4 +10,9 @@ public class Mapping
     {
         SourceNote = sourceNote;
     }
+
+    public override string ToString()
+    {
+        return $"{Name ?? "n/a"} - Source: {SourceNote}, Target: {TargetNote}";
+    }
 }
