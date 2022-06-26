@@ -5,7 +5,7 @@ public class Remapper
 {
     private const int TrackNumber = 0; //TODO don't just use the first track number, check if there are more and do something about it
 
-    public List<MidiNote> GetDistinctNotes(MidiFile midiFile)
+    public List<Mapping> GetMappings(MidiFile midiFile)
     {
         var noteEvents = midiFile.Events[TrackNumber]
             .Where(a => a is NoteEvent)
@@ -18,14 +18,14 @@ public class Remapper
             .OrderBy(a => a)
             .ToList();
 
-        var mapped = distinctNotes
-            .Select(a => MidiNote.Find(a))
+        var mappings = distinctNotes
+            .Select(a => new Mapping(MidiNote.Find(a)))
             .ToList();
 
-        return mapped;
+        return mappings;
     }
 
-    public void AlterMapping(MidiFile midiFile, List<Mapping> mappings)
+    public void AlterMapping(MidiFile midiFile, IEnumerable<Mapping> mappings)
     {
         foreach (var evnt in midiFile.Events[TrackNumber])
         {

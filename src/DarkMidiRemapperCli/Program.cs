@@ -6,11 +6,7 @@ var targetMidiFilePath = @"C:\Users\Michal\Downloads\test_drums_remapped.mid";
 var mf = new MidiFile(sourceMidiFilePath, false);
 
 var remapper = new Remapper();
-var distinctNotes = remapper.GetDistinctNotes(mf);
-
-var mappings = distinctNotes
-    .Select(a => new Mapping(a))
-    .ToList();
+var mappings = remapper.GetMappings(mf);
 
 //TODO assign names
 mappings[0].Name = "Kick"; //TODO remove this

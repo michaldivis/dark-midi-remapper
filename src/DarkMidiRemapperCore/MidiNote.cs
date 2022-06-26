@@ -3,7 +3,8 @@
 public class MidiNote
 {
     private const int C0NoteNumber = 24;
-    private static readonly List<MidiNote> AllNotes = GetAllNotes(C0NoteNumber);
+    private static readonly List<MidiNote> _allNotes = GetAllNotes(C0NoteNumber);
+    public static List<MidiNote> AllNotes => _allNotes;
 
     public int NoteNumber { get; }
     public string NoteName { get; }
@@ -16,7 +17,7 @@ public class MidiNote
 
     public static MidiNote Find(int noteNumber)
     {
-        return AllNotes.First(a => a.NoteNumber == noteNumber);
+        return _allNotes.First(a => a.NoteNumber == noteNumber);
     }
 
     public static MidiNote Find(MidiNumber number)
