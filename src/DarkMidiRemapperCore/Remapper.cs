@@ -19,7 +19,7 @@ public class Remapper
             .ToList();
 
         var mapped = distinctNotes
-            .Select(a => MidiNote.FindByNumber(a))
+            .Select(a => MidiNote.Find(a))
             .ToList();
 
         return mapped;

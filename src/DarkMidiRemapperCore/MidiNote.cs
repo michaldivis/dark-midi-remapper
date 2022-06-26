@@ -14,10 +14,15 @@ public class MidiNote
         NoteName = noteName;
     }
 
-    public static MidiNote FindByNumber(int noteNumber)
+    public static MidiNote Find(int noteNumber)
     {
         return AllNotes.First(a => a.NoteNumber == noteNumber);
-    }    
+    }
+
+    public static MidiNote Find(MidiNumber number)
+    {
+        return Find((int)number);
+    }
 
     private static List<MidiNote> GetAllNotes(int cZeroNoteNumber)
     {

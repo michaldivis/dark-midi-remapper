@@ -9,7 +9,7 @@ public class Note
     private const int OctaveRange = 12;
 
     public NotePitch BaseNotePitch { get; }
-    public Octave Octave { get; }    
+    public Octave Octave { get; }
 
     public Note(NotePitch baseNotePitch, Octave octave)
     {

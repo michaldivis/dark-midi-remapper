@@ -14,9 +14,11 @@ var mappings = distinctNotes
 
 //TODO assign names
 mappings[0].Name = "Kick"; //TODO remove this
+mappings[1].Name = "Snare"; //TODO remove this
 
 //TODO assign target notes
-mappings.ForEach(a => a.TargetNote = MidiNote.FindByNumber(12)); //TODO remove this
+mappings[0].TargetNote = MidiNote.Find(MidiNumber.C2);
+mappings[1].TargetNote = MidiNote.Find(MidiNumber.D2);
 
 remapper.AlterMapping(mf, mappings);
 
