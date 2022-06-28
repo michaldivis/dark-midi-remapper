@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <UserSecretsId>be19e4dd-6441-4b2d-84a4-0d7c75bb7528</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="20.1.0.61" />
     <PackageReference Include="Syncfusion.SfTextInputLayout.WPF" Version="20.1.0.61" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="20.1.0.61" />
