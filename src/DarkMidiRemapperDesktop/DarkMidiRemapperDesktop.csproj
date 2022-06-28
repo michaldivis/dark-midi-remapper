@@ -19,10 +19,8 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="20.1.0.61" />
-    <PackageReference Include="Syncfusion.SfTextInputLayout.WPF" Version="20.1.0.61" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="20.1.0.61" />
     <PackageReference Include="Syncfusion.Themes.FluentDark.WPF" Version="20.1.0.61" />
-    <PackageReference Include="Syncfusion.Tools.WPF" Version="20.1.0.61" />
   </ItemGroup>
 
   <ItemGroup>

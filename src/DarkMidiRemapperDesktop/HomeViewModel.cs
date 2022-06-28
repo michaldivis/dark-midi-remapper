@@ -3,8 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using DarkMidiRemapperCore;
 using Microsoft.Win32;
 using NAudio.Midi;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 
 namespace DarkMidiRemapperDesktop;
 
@@ -38,9 +40,18 @@ public partial class HomeViewModel : ObservableObject
         {
             return;
         }
-        
+
+        try
+        {
+            _midiFile = new MidiFile(dlg.FileName, false);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.ToString(), "Failed to load MIDI file");
+            return;
+        }
+
         MidiFilePath = dlg.FileName;
-        _midiFile = new MidiFile(MidiFilePath, false);
         IsMidiFileLoaded = true;
         SaveCommand.NotifyCanExecuteChanged();
         ClearCommand.NotifyCanExecuteChanged();
@@ -83,6 +94,8 @@ public partial class HomeViewModel : ObservableObject
         _remapper.AlterMapping(_midiFile, Mappings);
 
         MidiFile.Export(targetMidiFilePath, _midiFile.Events);
+
+        MessageBox.Show($"Done! Re-mapped MIDI file was saved to {targetMidiFilePath}", "Success");
     }
 
     [RelayCommand(CanExecute = nameof(IsMidiFileLoaded))]
