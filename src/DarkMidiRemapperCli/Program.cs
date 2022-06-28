@@ -1,8 +1,9 @@
 ﻿using DarkMidiRemapperCore;
 using NAudio.Midi;
 
-var sourceMidiFilePath = @"E:\Projects\DarkMidiRemapper\assets\test_drums.mid";
-var targetMidiFilePath = @"C:\Users\Michal\Downloads\test_drums_remapped.mid";
+//TODO get file path from args
+var sourceMidiFilePath = "xxx";
+var targetMidiFilePath = "xxx";
 var mf = new MidiFile(sourceMidiFilePath, false);
 
 var remapper = new Remapper();
