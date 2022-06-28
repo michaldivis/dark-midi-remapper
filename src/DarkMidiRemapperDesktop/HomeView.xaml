@@ -12,14 +12,17 @@
     Width="800"
     Height="450"
     sf:SfSkinManager.Theme="{sf:SkinManager ThemeName=FluentDark}"
+    Icon="icon.ico"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-    <sfShared:ChromelessWindow.DataContext>
+    <Window.DataContext>
         <local:HomeViewModel />
-    </sfShared:ChromelessWindow.DataContext>
+    </Window.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -37,38 +40,45 @@
             </WrapPanel>
         </Border>
 
-        <sf:CardView
+        <TextBlock
             Grid.Row="1"
-            CanEdit="False"
-            CanGroup="False"
-            CanSort="False"
-            ItemsSource="{Binding Mappings}"
-            ShowHeader="False">
-            <sf:CardView.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name, TargetNullValue='n/a'}" />
-                </DataTemplate>
-            </sf:CardView.HeaderTemplate>
-            <sf:CardView.ItemTemplate>
-                <DataTemplate>
-                    <Border Padding="5">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+            Margin="5"
+            FontStyle="Italic"
+            Opacity="0.5"
+            Text="{Binding MidiFilePath}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding MidiFilePath, TargetNullValue=''}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
-                            <TextBlock Grid.Column="0" Text="{Binding SourceNote}" />
-                            <TextBlock Grid.Column="1" Text=" -&gt; " />
-                            <sf:ComboBoxAdv
-                                Grid.Column="2"
-                                ItemsSource="{x:Static remapperCore:MidiNote.AllNotes}"
-                                SelectedItem="{Binding TargetNote}" />
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </sf:CardView.ItemTemplate>
-        </sf:CardView>
+        <sf:SfDataGrid
+            Grid.Row="2"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Mappings}"
+            SelectionMode="None">
+            <sf:SfDataGrid.Columns>
+                <sf:GridTextColumn
+                    HeaderText="Name"
+                    IsReadOnly="True"
+                    ValueBinding="{Binding Name, TargetNullValue='n/a'}" />
+                <sf:GridTextColumn
+                    HeaderText="Source"
+                    IsReadOnly="True"
+                    ValueBinding="{Binding SourceNote}" />
+                <sf:GridTemplateColumn HeaderText="Target">
+                    <sf:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={x:Static remapperCore:MidiNote.AllNotes}, Mode=OneTime}" SelectedItem="{Binding TargetNote}" />
+                        </DataTemplate>
+                    </sf:GridTemplateColumn.CellTemplate>
+                </sf:GridTemplateColumn>
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
     </Grid>
 </sfShared:ChromelessWindow>

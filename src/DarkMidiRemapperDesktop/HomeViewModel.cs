@@ -1,14 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DarkMidiRemapperCore;
+using Microsoft.Win32;
 using NAudio.Midi;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace DarkMidiRemapperDesktop;
 
 public partial class HomeViewModel : ObservableObject
 {
     private readonly Remapper _remapper = new();
+
+    [ObservableProperty]
+    private bool _isMidiFileLoaded;
+
+    [ObservableProperty]
+    private string? _midiFilePath;
 
     private MidiFile? _midiFile;
 
@@ -17,9 +25,24 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private void Load()
     {
-        //TODO get file from open file dialog
-        var midiFilePath = @"E:\Projects\DarkMidiRemapper\assets\test_drums.mid";
-        _midiFile = new MidiFile(midiFilePath, false);
+        var dlg = new OpenFileDialog
+        {
+            FileName = "MIDI",
+            DefaultExt = ".mid",
+            Filter = "MIDI files (.mid)|*.mid"
+        };
+
+        var result = dlg.ShowDialog();
+
+        if (result is false)
+        {
+            return;
+        }
+        
+        MidiFilePath = dlg.FileName;
+        _midiFile = new MidiFile(MidiFilePath, false);
+        IsMidiFileLoaded = true;
+
         var mappings = _remapper.GetMappings(_midiFile);
 
         Mappings.Clear();
@@ -37,11 +60,34 @@ public partial class HomeViewModel : ObservableObject
             return;
         }
 
+        var fileName = Path.GetFileNameWithoutExtension(_midiFilePath);
+
+        var dlg = new SaveFileDialog
+        {
+            FileName = $"{fileName}_remapped.mid",
+            DefaultExt = ".mid",
+            Filter = "MIDI files (.mid)|*.mid"
+        };
+
+        var result = dlg.ShowDialog();
+
+        if (result is false)
+        {
+            return;
+        }
+
+        string targetMidiFilePath = dlg.FileName;
+
         _remapper.AlterMapping(_midiFile, Mappings);
 
-        //TODO get file from save file dialog
-        var targetMidiFilePath = @"C:\Users\Michal\Downloads\test_drums_remapped.mid";
-
         MidiFile.Export(targetMidiFilePath, _midiFile.Events);
+    }
+
+    [RelayCommand]
+    private void Clear()
+    {
+        IsMidiFileLoaded = false;
+        MidiFilePath = null;
+        _midiFile = null;
     }
 }
