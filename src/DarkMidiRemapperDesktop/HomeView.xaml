@@ -29,14 +29,21 @@
 
         <Border Grid.Row="0" Padding="5">
             <WrapPanel>
-                <sf:ButtonAdv
+                <Button
                     Margin="5"
+                    Padding="10,5"
                     Command="{Binding LoadCommand}"
-                    Label="Load MIDI file" />
-                <sf:ButtonAdv
+                    Content="Load MIDI file" />
+                <Button
                     Margin="5"
+                    Padding="10,5"
                     Command="{Binding SaveCommand}"
-                    Label="Save MIDI file" />
+                    Content="Save MIDI file" />
+                <Button
+                    Margin="5"
+                    Padding="10,5"
+                    Command="{Binding ClearCommand}"
+                    Content="Clear" />
             </WrapPanel>
         </Border>
 
@@ -59,7 +66,11 @@
 
         <sf:SfDataGrid
             Grid.Row="2"
+            AllowFiltering="False"
+            AllowGrouping="False"
+            AllowSorting="False"
             AutoGenerateColumns="False"
+            IsReadOnly="True"
             ItemsSource="{Binding Mappings}"
             SelectionMode="None">
             <sf:SfDataGrid.Columns>

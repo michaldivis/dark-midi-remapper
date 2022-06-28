@@ -42,6 +42,8 @@ public partial class HomeViewModel : ObservableObject
         MidiFilePath = dlg.FileName;
         _midiFile = new MidiFile(MidiFilePath, false);
         IsMidiFileLoaded = true;
+        SaveCommand.NotifyCanExecuteChanged();
+        ClearCommand.NotifyCanExecuteChanged();
 
         var mappings = _remapper.GetMappings(_midiFile);
 
@@ -52,7 +54,7 @@ public partial class HomeViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(IsMidiFileLoaded))]
     private void Save()
     {
         if(_midiFile is null)
@@ -83,11 +85,14 @@ public partial class HomeViewModel : ObservableObject
         MidiFile.Export(targetMidiFilePath, _midiFile.Events);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(IsMidiFileLoaded))]
     private void Clear()
     {
         IsMidiFileLoaded = false;
         MidiFilePath = null;
         _midiFile = null;
+        Mappings.Clear();
+        SaveCommand.NotifyCanExecuteChanged();
+        ClearCommand.NotifyCanExecuteChanged();
     }
 }
