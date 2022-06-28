@@ -22,6 +22,7 @@ public partial class HomeViewModel : ObservableObject
         _midiFile = new MidiFile(midiFilePath, false);
         var mappings = _remapper.GetMappings(_midiFile);
 
+        Mappings.Clear();
         foreach (var mapping in mappings)
         {
             Mappings.Add(mapping);
