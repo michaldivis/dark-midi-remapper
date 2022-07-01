@@ -1,12 +1,14 @@
-﻿namespace DarkMidiRemapperCore;
+﻿using DarkMusicConcepts;
+
+namespace DarkMidiRemapperCore;
 
 public class Mapping
 {
-    public MidiNote SourceNote { get; }
-    public MidiNote TargetNote { get; set; }
+    public Note SourceNote { get; }
+    public Note TargetNote { get; set; }
     public string? Name { get; set; }
 
-    public Mapping(MidiNote sourceNote)
+    public Mapping(Note sourceNote)
     {
         SourceNote = sourceNote;
         TargetNote = sourceNote;

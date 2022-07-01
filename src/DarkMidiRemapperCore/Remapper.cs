@@ -1,4 +1,5 @@
-﻿using NAudio.Midi;
+﻿using DarkMusicConcepts;
+using NAudio.Midi;
 
 namespace DarkMidiRemapperCore;
 public class Remapper
@@ -19,7 +20,7 @@ public class Remapper
             .ToList();
 
         var mappings = distinctNotes
-            .Select(a => new Mapping(MidiNote.Find(a)))
+            .Select(a => new Mapping(Note.FindByMidiNumber(a)))
             .ToList();
 
         return mappings;
@@ -31,7 +32,7 @@ public class Remapper
         {
             if(evnt is NoteEvent noteEvent)
             {
-                var mapping = mappings.FirstOrDefault(a => a.SourceNote.NoteNumber == noteEvent.NoteNumber);
+                var mapping = mappings.FirstOrDefault(a => a.SourceNote.MidiNumber.Value == noteEvent.NoteNumber);
                 if (mapping is null)
                 {
                     //TODO handle mapping not found
@@ -44,7 +45,7 @@ public class Remapper
                     continue;
                 }
 
-                noteEvent.NoteNumber = mapping.TargetNote.NoteNumber;
+                noteEvent.NoteNumber = mapping.TargetNote.MidiNumber.Value;
             }
         }
     }
