@@ -1,4 +1,5 @@
 ﻿using DarkMidiRemapperCore;
+using DarkMusicConcepts;
 using NAudio.Midi;
 
 //TODO get file path from args
@@ -14,8 +15,8 @@ mappings[0].Name = "Kick"; //TODO remove this
 mappings[1].Name = "Snare"; //TODO remove this
 
 //TODO assign target notes
-mappings[0].TargetNote = MidiNote.Find(MidiNumber.C2);
-mappings[1].TargetNote = MidiNote.Find(MidiNumber.D2);
+mappings[0].TargetNote = Note.C2;
+mappings[1].TargetNote = Note.D2;
 
 remapper.AlterMapping(mf, mappings);
 

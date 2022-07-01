@@ -92,13 +92,17 @@
                     IsReadOnly="True"
                     ValueBinding="{Binding Name, TargetNullValue='n/a'}" />-->
                 <sf:GridTextColumn
+                    DisplayBinding="{Binding SourceNote.Name}"
                     HeaderText="Source"
                     IsReadOnly="True"
                     ValueBinding="{Binding SourceNote}" />
                 <sf:GridTemplateColumn HeaderText="Target">
                     <sf:GridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Source={x:Static dmc:Note.AllNotes}, Mode=OneTime}" SelectedItem="{Binding TargetNote}" />
+                            <ComboBox
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding Source={x:Static dmc:Note.AllNotes}, Mode=OneTime}"
+                                SelectedItem="{Binding TargetNote}" />
                         </DataTemplate>
                     </sf:GridTemplateColumn.CellTemplate>
                 </sf:GridTemplateColumn>
